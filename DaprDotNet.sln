@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaprDotNet.Client", "src\DaprDotNet.Client\DaprDotNet.Client.csproj", "{B5F67AF1-845C-4030-8F0F-673BCEC8302A}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2484BB73-1AA3-4762-8C8B-1128DA8CDEA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaprDotnet.Service", "src\DaprDotnet.Service\DaprDotnet.Service.csproj", "{4EF3E752-14A5-4BBC-BB69-6E0102AAC50D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5F67AF1-845C-4030-8F0F-673BCEC8302A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5F67AF1-845C-4030-8F0F-673BCEC8302A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5F67AF1-845C-4030-8F0F-673BCEC8302A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5F67AF1-845C-4030-8F0F-673BCEC8302A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2484BB73-1AA3-4762-8C8B-1128DA8CDEA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2484BB73-1AA3-4762-8C8B-1128DA8CDEA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2484BB73-1AA3-4762-8C8B-1128DA8CDEA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2484BB73-1AA3-4762-8C8B-1128DA8CDEA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EF3E752-14A5-4BBC-BB69-6E0102AAC50D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EF3E752-14A5-4BBC-BB69-6E0102AAC50D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EF3E752-14A5-4BBC-BB69-6E0102AAC50D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EF3E752-14A5-4BBC-BB69-6E0102AAC50D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {00F9CE61-DDD6-4941-9830-763E4431BF80}
+	EndGlobalSection
+EndGlobal

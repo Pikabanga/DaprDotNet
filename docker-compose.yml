@@ -1,0 +1,47 @@
+version: '3.4'
+
+services:
+  daprdotnet.service:
+    image: ${DOCKER_REGISTRY-}daprdotnetservice
+    build:
+      context: .
+      dockerfile: src/DaprDotnet.Service/Dockerfile
+    networks:
+      - daprdotnet
+  daprdotnet.service.dapr:
+    image: "daprio/daprd:edge"
+    command: ["./daprd",
+     "-app-id", "daprdotnet.service",
+     "-app-port", "3000",
+     "-placement-host-address", "placement:50006",
+     "-dapr-grpc-port", "50002",
+     "-components-path", "/components"]
+    volumes:
+        - "./src/DaprDotnet.Service/Dapr/Components/:/components"
+    depends_on:
+      - daprdotnet.service
+    network_mode: "service:daprdotnet.service"
+
+  daprdotnet.client:
+    image: ${DOCKER_REGISTRY-}daprdotnetclient
+    build:
+      context: .
+      dockerfile: src/DaprDotNet.Client/Dockerfile
+
+  placement:
+    image: "daprio/dapr"
+    command: ["./placement", "-port", "50006"]
+    ports:
+      - "50006:50006"
+    networks:
+      - daprdotnet
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6380:6379"
+    networks:
+      - daprdotnet
+
+networks:
+    daprdotnet:
