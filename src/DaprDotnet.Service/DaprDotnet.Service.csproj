@@ -10,10 +10,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Protobuf Include="Protos\*.proto" ProtoRoot="Protos" GrpcServices="None" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Dapr.AspNetCore" Version="1.4.0" />
 		<PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
@@ -21,6 +17,16 @@
 
 	<ItemGroup>
 		<Folder Include="Services\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DaprDotNet.Service.Public\DaprDotNet.Service.Public.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Protobuf Include="..\DaprDotNet.Service.Grpc\Protos\data.proto" GrpcServices="Server">
+	    <Link>Protos\data.proto</Link>
+	  </Protobuf>
 	</ItemGroup>
 
 </Project>

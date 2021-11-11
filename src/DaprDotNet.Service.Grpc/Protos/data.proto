@@ -5,7 +5,7 @@
 
 syntax = "proto3";
 
-option csharp_namespace = "DaprDotnet.Service";
+option csharp_namespace = "DaprDotnet.Service.Grpc";
 
 message Account {
     string Id = 1;

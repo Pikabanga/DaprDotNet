@@ -1,6 +1,7 @@
 ﻿using Dapr.AppCallback.Autogen.Grpc.v1;
 using Dapr.Client;
 using Dapr.Client.Autogen.Grpc.v1;
+using DaprDotnet.Service.Grpc;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using System.Text.Json;
@@ -95,8 +96,8 @@ namespace DaprDotnet.Service
         {
             if (request.PubsubName == "pubsub")
             {
-                var input = JsonSerializer.Deserialize<Transaction>(request.Data.ToStringUtf8(), this.jsonOptions);
-                var transaction = new Transaction() { Id = input.Id, Amount = (int)input.Amount, };
+                var input = JsonSerializer.Deserialize<DaprDotNet.Service.Models.Transaction>(request.Data.ToStringUtf8(), this.jsonOptions);
+                var transaction = new Grpc.Transaction() { Id = input.Id, Amount = (int)input.Amount, };
                 if (request.Topic == "deposit")
                 {
                     await Deposit(transaction, context);
@@ -118,7 +119,7 @@ namespace DaprDotnet.Service
         /// <returns></returns>
         public async Task<Account> GetAccount(GetAccountRequest input, ServerCallContext context)
         {
-            var state = await _daprClient.GetStateEntryAsync<Account>(StoreName, input.Id);
+            var state = await _daprClient.GetStateEntryAsync<DaprDotNet.Service.Models.Account>(StoreName, input.Id);
             return new Account() { Id = state.Value.Id, Balance = (int)state.Value.Balance, };
         }
 
@@ -131,8 +132,8 @@ namespace DaprDotnet.Service
         public async Task<Account> Deposit(Transaction transaction, ServerCallContext context)
         {
             _logger.LogDebug("Enter deposit");
-            var state = await _daprClient.GetStateEntryAsync<Account>(StoreName, transaction.Id);
-            state.Value ??= new Account() { Id = transaction.Id, };
+            var state = await _daprClient.GetStateEntryAsync<DaprDotNet.Service.Models.Account >(StoreName, transaction.Id);
+            state.Value ??= new DaprDotNet.Service.Models.Account() { Id = transaction.Id, };
             state.Value.Balance += transaction.Amount;
             await state.SaveAsync();
             return new Account() { Id = state.Value.Id, Balance = (int)state.Value.Balance, };
@@ -147,7 +148,7 @@ namespace DaprDotnet.Service
         public async Task<Account> Withdraw(Transaction transaction, ServerCallContext context)
         {
             _logger.LogDebug("Enter withdraw");
-            var state = await _daprClient.GetStateEntryAsync<Account>(StoreName, transaction.Id);
+            var state = await _daprClient.GetStateEntryAsync<DaprDotNet.Service.Models.Account>(StoreName, transaction.Id);
 
             if (state.Value == null)
             {

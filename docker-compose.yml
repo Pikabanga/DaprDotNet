@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: src/DaprDotnet.Service/Dockerfile
+    ports:
+      - "50002:50002"
     networks:
       - daprdotnet
   daprdotnet.service.dapr:
@@ -17,7 +19,7 @@ services:
      "-dapr-grpc-port", "50002",
      "-components-path", "/components"]
     volumes:
-        - "./src/DaprDotnet.Service/Dapr/Components/:/components"
+        - "./src/Dapr/Components/:/components"
     depends_on:
       - daprdotnet.service
     network_mode: "service:daprdotnet.service"
@@ -27,6 +29,22 @@ services:
     build:
       context: .
       dockerfile: src/DaprDotNet.Client/Dockerfile
+    environment:
+        DAPR_GRPC_PORT: "50002"
+    networks:
+      - daprdotnet
+  daprdotnet.client.dapr:
+    image: "daprio/daprd:edge"
+    command: ["./daprd",
+     "-app-id", "daprdotnet.client",
+     "-placement-host-address", "placement:50006",
+     "-dapr-grpc-port", "50001",
+     "-components-path", "/components"]
+    volumes:
+        - "./src/Dapr/Components/:/components"
+    depends_on:
+      - daprdotnet.client
+    network_mode: "service:daprdotnet.client"
 
   placement:
     image: "daprio/dapr"
